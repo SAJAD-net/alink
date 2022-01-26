@@ -11,3 +11,5 @@
   ### *second method* :
     bash alink.sh -i 
     alink [APPLICATION] [NICKNAME]
+# TODO:
+- [ ] complete the alink.conf file
