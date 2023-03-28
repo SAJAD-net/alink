@@ -14,7 +14,7 @@ if [ "$1" == "-i" ]; then
     	done
 
 	echo "- alink successfully installed !"	
-    	bash alink.sh alink.sh alink	
+	echo "alias alink='bash $HOME/.alink/alink.sh'" >> $HOME/$rc_dest
     fi
 
 elif [[ $1 && $2 ]]; then
