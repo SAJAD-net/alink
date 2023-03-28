@@ -1,15 +1,7 @@
 #!/bin/bash
 
-shell=$(echo $SHELL | grep '/\w*/\w*' | cut -d '/' -f 3-)	
-
-function reload() {
-    if [ "$shell"=="bash" ]; then
-        source $HOME/.bashrc
-    elif [ "$shell"=="zsh" ]; then
-	source $HOME/.zshrc
-    fi	
-}
-
+shell=$(echo $SHELL | rev | cut -d / -f 1 | rev)
+rc_dest=."$shell"rc
 
 if [ "$1" == "-i" ]; then
     if [ -f $HOME/.alink/alink.sh ]; then
@@ -23,11 +15,9 @@ if [ "$1" == "-i" ]; then
 
 	echo "- alink successfully installed !"	
     	bash alink.sh alink.sh alink	
-    
-	reload
     fi
 
-elif [[ "$1" != "" && $2 != "" ]]; then
+elif [[ $1 && $2 ]]; then
     ext=$(echo $1 | grep '\.\w*' | cut -d "." -f 2)
     
     if [ -f $HOME/.alink/alink.sh ]; then
@@ -38,14 +28,11 @@ elif [[ "$1" != "" && $2 != "" ]]; then
 
     path=$(pwd)
     com="alias $2='$runner $path/$1'"
-    shell=".$shell""rc"
-    echo $com >> $HOME/$shell
-	
-    reload
+    echo $com >> $HOME/$rc_dest
 
 else
-    echo  "usage  :  alink [SCRIPT] [NAME_TO_LINK]"
+    echo  "usage  :  alink [SCRIPT] [NAME_TO_LINK] && source ~/.[YOUR-SHELL]rc"
     echo  "arg    :  -i : insall the alink on your system"
-    echo  "example:  alink ghost.py ghost"
+    echo  "example:  alink ghost.py ghost && source ~/.zshrc"
 fi
 
