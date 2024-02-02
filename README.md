@@ -1,7 +1,7 @@
 # alink
 
 ## discription :
-    This is a small tool for creating aliases(nicknames) for other programs
+This is a small tool for creating aliases(nicknames) for other programs
 
 ## usage:
   ### *to display help* :
