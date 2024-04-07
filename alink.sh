@@ -15,12 +15,13 @@ if [ "$1" == "-i" ]; then
     	for file in alink.sh alink.conf; do
         	cp $file $HOME/.alink/
     	done
+
+        echo "[+] alink successfully installed !"
     fi
 
     if [[ -z $(grep "alias fnote" $HOME/$rc_dest) ]]
     then
         echo "alias alink='bash $HOME/.alink/alink.sh'" >> $HOME/$rc_dest
-        echo "[+] alink successfully installed !"
     fi
 
 # Try to make an alias if user passed two arguments
@@ -40,11 +41,13 @@ elif [[ $1 && $2 ]]; then
 
         else
             echo "[!] file type unknown! $1"
+            exit 1
         fi
 
     else
         echo "[!] $HOME/.alink/alink.conf is missing !"
         echo "[!] run the alink with -i falg to fix the problem. Then try again"
+        exit 2
     fi
 
     if [[ -z $(grep "alias $2" $HOME/$rc_dest) ]]
@@ -74,6 +77,7 @@ elif [[ $1 && $2 ]]; then
 
     else
         echo "[!] alink : $2 [NO], alias already exists !"
+    fi
 
 # Prints the usage to the standard output if arguments weren't specified.
 else
