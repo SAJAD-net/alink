@@ -34,7 +34,6 @@ elif [[ $1 && $2 ]]; then
         if [ $ext ]
         then
             runner=$(grep $ext' \w*' $HOME/.alink/alink.conf | cut -d " " -f 2-)
-
         elif [ $(file $1 | grep -Eo "executable") ]
         then
             exeable=true
@@ -52,13 +51,13 @@ elif [[ $1 && $2 ]]; then
 
     if [[ -z $(grep "alias $2" $HOME/$rc_dest) ]]
     then
-        file_path=$(echo $1 | sed -r "s/\w*\.\w*//")
+        file_path=$(echo $1 | sed -r "s/\/\w*\.\w*//")
         file_name=$(echo $1 | sed -r "s/(\w*\/)*//")
 
-        # Checking for full path
+	# Checking for full path
         if [[ $file_path =~ [a-zA-Z]*/[a-zA-Z]* ]]
         then
-            path=$1
+            path=$file_path
 
         else
             path=$(pwd)
@@ -72,7 +71,7 @@ elif [[ $1 && $2 ]]; then
             com="alias $2='$path/./${file_name}'"
         fi
 
-        echo $com >> $HOME/$rc_dest
+	echo $com >> $HOME/$rc_dest
         echo "[+] alink : $2 [OK], reload your shell and you're good to go :)"
 
     else
